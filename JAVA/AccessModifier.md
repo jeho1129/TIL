@@ -159,3 +159,88 @@
     - public은 모든 접근을 허용하기 때문에 필드, 메서드 모두 접근할 수 있다.
     - 서로 다른 패키지이므로, default 접근 제어자에 접근할 수 없다.
     - private도 호출이 불가하다.
+
+4. **접근 제어자 사용(클래스 레벨)**
+    - 클래스 레벨의 접근 제어자는 public, default만 사용할 수 있다.(private, protected는 사용할 수 없다.)
+    - public 클래스는 반드시 파일명과 이름이 같아야 한다.
+        - 하나의 자바 파일에 public 클래스는 하나만 등장할 수 있다.
+        - 하나의 자바 파일에 default 접근 제어자를 사용하는 클래스는 무한정 만들 수 있다.
+    - 예시
+        ```java
+        package access.a;
+
+        public class PublicClass {
+            public static void main(String[] args) {
+                PublicClass publicclass = new PublicClass();
+                DefaultClass1 class1 = new DefaultClass1();
+                DefaultClass2 class2 = new DefaultClass2();
+            }
+        }
+
+        class DefaultClass1 {
+
+        }
+
+        class DefaultClass2 {
+
+        }
+        ```
+        - 패키지 위치는 package access.a이다.
+        - PublicClass라는 이름의 클래스를 만들었다. 이 클래스는 public 접근 제어자다. 따라서 파일명과 이 클래스의 이름이 반드시 같아야 한다. 이 클래스는 public이기 때문에 외부에서 접근할 수 있다.
+        - DefaultClass1, DefaultClass2는 default 접근 제어자다. 이 클래스는 default이기 때문에 같은 패키지 내부에서만 접근할 수 있다.
+
+5. **캡슐화**
+    - 캡슐화(Encapsulation)는 객체 지향 프로그래밍의 중요한 개념 중 하나다. 캡슐화는 데이터와 해당 데이터를 처리하는 메서드를 하나로 묶어서 외부에서의 접근을 제한하는 것을 말한다. 캡슐화를 통해 데이터의 직접적인 변경을 방지하거나 제한할 수 있다.
+    - 즉, 속성과 기능을 하나로 묶고, 외부에 꼭 필요한 기능만 노출하고 나머지는 모두 내부로 숨기는 것이다.
+    1. 데이터 숨기기
+        - 객체에는 속성(데이터)과 기능(메서드)이 있다. 캡슐화에서 가장 필수로 숨겨야 하는 것은 속성(데이터)이다.
+        - 객체의 데이터는 객체가 제공하는 기능인 메서드를 통해서 접근해야 한다.
+    2. 기능 숨기기
+        - 객체의 기능 중에서 외부에서 사용하지 않고 내부에서만 사용하는 기능들이 있다. 이런 기능도 모두 감추는 것이 좋다.
+        - 사용자 입장에서 꼭 필요한 기능만 외부에 노출한다.
+    - 데이터는 모두 숨기고, 기능은 꼭 필요한 기능만 노출하는 것이 좋은 캡슐화이다.
+    - 예시
+        ```java
+        package access.b;
+
+        public class BankAccount {
+
+            private int balance;
+
+            public BankAccount() {
+                balance = 0;
+            }
+
+            // public 메서드 : 입금
+            public void deposit(int amount) {
+                if (isAmountValid(amount)) {
+                    balance += amount;
+                } else {
+                    System.out.println("유효하지 않은 금액입니다.");
+                }
+            }
+
+            // public 메서드 : 출금
+            public void withdraw(int amount) {
+                if (isAmountValid(amount) && balance - amount >= 0) {
+                    balance -= amount;
+                } else {
+                    System.out.println("유효하지 않은 금액이거나 잔액이 부족합니다.");
+                }
+            }
+
+            // public 메서드 : 잔액 확인
+            public int getBalance() {
+                return balance;
+            }
+
+            private boolean isAmountValid(int amount) {
+                // 금액이 0보다 커야한다.
+                return amount > 0;
+            }
+        }
+        ```
+        - private
+            - balance : 데이터 필드는 외부에 직접 노출하지 않는다. BankAccount가 제공하는 메서드를 통해서만 접근할 수 있다.
+            - isAmountValid() : 입력 금액을 검증하는 기능은 내부에서만 필요한 기능이다. 따라서 private를 사용한다.
+    - 접근 제어자와 캡슐화를 통해 데이터를 안전하게 보호하는 것은 물론이고, 개발자 입장에서 해당 기능을 사용하는 복잡도도 낮출 수 있다.
