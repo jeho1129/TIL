@@ -733,3 +733,10 @@
   ```
   - soundAnimal(AbstractAnimal animal) : AbstractAnimal을 상속한 Dog, Bird, Chicken을 전달해서 실행할 수 있다.
   - flyAnimal(Fly fly) : Fly 인터페이스를 구현한 Bird, Chicken을 전달해서 실행할 수 있다.
+
+12. **OCP(Open-Closed Principle) 원칙**
+  - 좋은 객체 지향 설계 원칙 중 하나로 OCP 원칙이라는 것이 있다.
+    - Open for extension : 새로운 기능의 추가나 변경 사항이 생겼을 때, 기존 코드는 확장할 수 있어야 한다.
+    - Closed for modification : 기존의 코드는 수정되지 않아야 한다.
+  - 확장에는 열려있고, 변경에는 닫혀있다는 뜻인데, 즉 기존의 코드 수정 없이 새로운 기능을 추가할 수 있다는 의미이다.
+    
